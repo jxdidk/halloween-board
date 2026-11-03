@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <radialGradient id="pglow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff9e42"/>
+      <stop offset="70%" stop-color="#ff7a18"/>
+      <stop offset="100%" stop-color="#b84b00"/>
+    </radialGradient>
+  </defs>
+  <!-- Stem -->
+  <path d="M30 6 C32 2, 38 4, 36 14 C33 13, 31 12, 30 6 Z" fill="#2e7d32"/>
+  <!-- Pumpkin body -->
+  <ellipse cx="32" cy="36" rx="28" ry="24" fill="url(#pglow)"/>
+  <path d="M22 15 C14 20, 8 26, 8 36 C8 46, 15 54, 22 57" fill="none" stroke="#b84b00" stroke-width="2" opacity="0.6"/>
+  <path d="M42 15 C50 20, 56 26, 56 36 C56 46, 49 54, 42 57" fill="none" stroke="#b84b00" stroke-width="2" opacity="0.6"/>
+  <path d="M32 12 C32 24, 32 48, 32 60" fill="none" stroke="#b84b00" stroke-width="1.5" opacity="0.5"/>
+  <!-- Eyes -->
+  <polygon points="20,28 28,30 24,36" fill="#120a1f"/>
+  <polygon points="44,28 36,30 40,36" fill="#120a1f"/>
+  <!-- Nose -->
+  <polygon points="32,36 29,42 35,42" fill="#120a1f"/>
+  <!-- Mouth -->
+  <polygon points="18,48 24,46 28,50 32,46 36,50 40,46 46,48 42,54 36,52 32,56 28,52 22,54" fill="#120a1f"/>
+</svg>

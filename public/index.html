@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halloween Message Board | กระดานข้อความฮาโลวีน</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Google Fonts: Creepster for spooky titles; Kanit & Mali for Thai and legible message text -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Kanit:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Mali:wght@400;600;700&family=Nosifer&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ==================================================== -->
+  <!-- SCENE PROPS (PURE SVG & CSS ANIMATIONS)              -->
+  <!-- ==================================================== -->
+
+  <!-- 1. Starfield & Glowing Green Fireflies Background -->
+  <div class="sky-stars" id="starfield" aria-hidden="true"></div>
+  <div class="fireflies-container" id="fireflies" aria-hidden="true"></div>
+
+  <!-- 2. Glowing Full Moon & Drifting Clouds -->
+  <div class="moon-cloud-stage" aria-hidden="true">
+    <div class="full-moon">
+      <svg viewBox="0 0 160 160" width="160" height="160" class="moon-svg">
+        <defs>
+          <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fffdf0"/>
+            <stop offset="65%" stop-color="#fdf4b8"/>
+            <stop offset="90%" stop-color="#eedc82"/>
+            <stop offset="100%" stop-color="#d4af37"/>
+          </radialGradient>
+          <filter id="moonAura">
+            <feGaussianBlur stdDeviation="6" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+        </defs>
+        <!-- Moon Sphere -->
+        <circle cx="80" cy="80" r="72" fill="url(#moonGlow)" filter="url(#moonAura)"/>
+        <!-- Craters -->
+        <circle cx="55" cy="52" r="14" fill="#dfca6c" opacity="0.45"/>
+        <circle cx="108" cy="70" r="19" fill="#dfca6c" opacity="0.4"/>
+        <circle cx="68" cy="98" r="11" fill="#dfca6c" opacity="0.35"/>
+        <circle cx="95" cy="115" r="9" fill="#dfca6c" opacity="0.3"/>
+        <circle cx="42" cy="78" r="7" fill="#dfca6c" opacity="0.3"/>
+      </svg>
+    </div>
+    <!-- Clouds Drifting Past Moon -->
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+  </div>
+
+  <!-- 3. Cobwebs & Dangling Spiders (Top-Left & Top-Right) -->
+  <div class="cobweb top-left" aria-hidden="true">
+    <svg viewBox="0 0 180 180" class="web-svg">
+      <path d="M0,0 L180,0 M0,0 L150,60 M0,0 L110,110 M0,0 L60,150 M0,0 L0,180" stroke="#7e7492" stroke-width="1.2" opacity="0.6"/>
+      <path d="M40,0 Q32,25 0,40 M80,0 Q65,55 0,80 M120,0 Q95,85 0,120 M160,0 Q130,120 0,160" stroke="#7e7492" stroke-width="1" fill="none" opacity="0.5"/>
+    </svg>
+    <!-- Dangling Spider on Thread -->
+    <div class="spider-thread thread-left">
+      <div class="spider">
+        <svg viewBox="0 0 36 36" width="30" height="30">
+          <ellipse cx="18" cy="18" rx="8" ry="10" fill="#120a1f" stroke="#7CFC00" stroke-width="1"/>
+          <circle cx="18" cy="9" r="5" fill="#120a1f" stroke="#ff7a18" stroke-width="1"/>
+          <!-- Eyes -->
+          <circle cx="16" cy="8" r="1" fill="#7CFC00"/>
+          <circle cx="20" cy="8" r="1" fill="#7CFC00"/>
+          <!-- Legs -->
+          <path d="M12,14 Q4,8 2,16 M12,18 Q3,18 2,24 M12,22 Q5,26 3,32" stroke="#4a3e5c" stroke-width="1.5" fill="none"/>
+          <path d="M24,14 Q32,8 34,16 M24,18 Q33,18 34,24 M24,22 Q31,26 33,32" stroke="#4a3e5c" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="cobweb top-right" aria-hidden="true">
+    <svg viewBox="0 0 180 180" class="web-svg web-right">
+      <path d="M180,0 L0,0 M180,0 L30,60 M180,0 L70,110 M180,0 L120,150 M180,0 L180,180" stroke="#7e7492" stroke-width="1.2" opacity="0.6"/>
+      <path d="M140,0 Q148,25 180,40 M100,0 Q115,55 180,80 M60,0 Q85,85 180,120 M20,0 Q50,120 180,160" stroke="#7e7492" stroke-width="1" fill="none" opacity="0.5"/>
+    </svg>
+    <!-- Dangling Spider on Thread -->
+    <div class="spider-thread thread-right">
+      <div class="spider">
+        <svg viewBox="0 0 36 36" width="28" height="28">
+          <ellipse cx="18" cy="18" rx="8" ry="10" fill="#120a1f" stroke="#ff7a18" stroke-width="1"/>
+          <circle cx="18" cy="9" r="5" fill="#120a1f" stroke="#7CFC00" stroke-width="1"/>
+          <circle cx="16" cy="8" r="1" fill="#ff7a18"/>
+          <circle cx="20" cy="8" r="1" fill="#ff7a18"/>
+          <path d="M12,14 Q4,8 2,16 M12,18 Q3,18 2,24 M12,22 Q5,26 3,32" stroke="#4a3e5c" stroke-width="1.5" fill="none"/>
+          <path d="M24,14 Q32,8 34,16 M24,18 Q33,18 34,24 M24,22 Q31,26 33,32" stroke="#4a3e5c" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Flying Bats Traverse Screen at Intervals -->
+  <div class="bat-flight-path bat-1" aria-hidden="true">
+    <div class="bat-body">
+      <svg viewBox="0 0 64 36" width="46" height="26">
+        <path class="bat-wing wing-left" d="M32,18 Q20,2 2,6 Q10,18 16,16 Q20,26 32,20 Z" fill="#1b122c"/>
+        <path class="bat-wing wing-right" d="M32,18 Q44,2 62,6 Q54,18 48,16 Q44,26 32,20 Z" fill="#1b122c"/>
+        <circle cx="32" cy="18" r="5" fill="#0d0716"/>
+        <polygon points="30,14 31,10 33,14" fill="#0d0716"/>
+        <polygon points="33,14 34,10 35,14" fill="#0d0716"/>
+        <circle cx="30.5" cy="16.5" r="0.8" fill="#ff7a18"/>
+        <circle cx="33.5" cy="16.5" r="0.8" fill="#ff7a18"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="bat-flight-path bat-2" aria-hidden="true">
+    <div class="bat-body">
+      <svg viewBox="0 0 64 36" width="34" height="20">
+        <path class="bat-wing wing-left" d="M32,18 Q20,2 2,6 Q10,18 16,16 Q20,26 32,20 Z" fill="#150e24"/>
+        <path class="bat-wing wing-right" d="M32,18 Q44,2 62,6 Q54,18 48,16 Q44,26 32,20 Z" fill="#150e24"/>
+        <circle cx="32" cy="18" r="4.5" fill="#08040d"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- 5. Floating Ghosts with Translucent Effect -->
+  <div class="floating-ghost ghost-left" aria-hidden="true">
+    <svg viewBox="0 0 80 120" width="70" height="105" class="ghost-svg">
+      <defs>
+        <radialGradient id="ghostGlow" cx="50%" cy="40%" r="50%">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.85"/>
+          <stop offset="60%" stop-color="#c6f6d5" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#7CFC00" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <path d="M40,15 C20,15 12,35 12,65 C12,90 22,105 28,95 C34,85 38,102 46,94 C54,86 60,105 68,95 C74,87 68,65 68,45 C68,25 60,15 40,15 Z" fill="url(#ghostGlow)"/>
+      <!-- Hollow eyes & mouth -->
+      <ellipse cx="32" cy="42" rx="4" ry="6" fill="#120a1f"/>
+      <ellipse cx="48" cy="42" rx="4" ry="6" fill="#120a1f"/>
+      <ellipse cx="40" cy="56" rx="3.5" ry="5.5" fill="#120a1f"/>
+    </svg>
+  </div>
+
+  <div class="floating-ghost ghost-right" aria-hidden="true">
+    <svg viewBox="0 0 80 120" width="55" height="85" class="ghost-svg">
+      <path d="M40,15 C20,15 12,35 12,65 C12,90 22,105 28,95 C34,85 38,102 46,94 C54,86 60,105 68,95 C74,87 68,65 68,45 C68,25 60,15 40,15 Z" fill="url(#ghostGlow)"/>
+      <ellipse cx="32" cy="42" rx="3.5" ry="5" fill="#120a1f"/>
+      <ellipse cx="48" cy="42" rx="3.5" ry="5" fill="#120a1f"/>
+      <ellipse cx="40" cy="55" rx="3" ry="4.5" fill="#120a1f"/>
+    </svg>
+  </div>
+
+  <!-- 6. Graveyard, Gnarled Bare Trees, Silhouetted Tombstones & Crosses -->
+  <div class="graveyard-landscape" aria-hidden="true">
+    <svg viewBox="0 0 1440 280" preserveAspectRatio="none" class="landscape-svg">
+      <defs>
+        <linearGradient id="hillGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#180e29"/>
+          <stop offset="60%" stop-color="#120a1f"/>
+          <stop offset="100%" stop-color="#08040d"/>
+        </linearGradient>
+      </defs>
+      
+      <!-- Distant Hills -->
+      <path d="M0,170 Q360,120 720,160 T1440,150 L1440,280 L0,280 Z" fill="#0d0716" opacity="0.7"/>
+
+      <!-- Bare Gnarled Trees (Left) -->
+      <g fill="#0a0512">
+        <!-- Main Trunk -->
+        <path d="M120,280 L135,160 Q138,120 125,90 Q118,70 95,50 L102,48 Q125,65 132,88 Q145,50 160,20 L168,22 Q152,55 142,95 Q160,110 185,120 L182,128 Q155,118 140,125 L145,280 Z"/>
+        <!-- Side twisted branches -->
+        <path d="M133,140 Q105,130 80,140 L78,134 Q105,122 134,132 Z"/>
+        <path d="M140,105 Q170,90 200,85 L202,91 Q172,96 141,112 Z"/>
+      </g>
+
+      <!-- Bare Gnarled Trees (Right) -->
+      <g fill="#0a0512">
+        <path d="M1320,280 L1305,160 Q1300,110 1315,75 Q1330,50 1355,30 L1350,26 Q1320,48 1308,75 Q1295,45 1280,15 L1272,18 Q1290,52 1300,95 Q1280,115 1255,125 L1258,132 Q1285,120 1302,126 L1295,280 Z"/>
+        <path d="M1308,135 Q1335,120 1365,130 L1367,124 Q1335,112 1307,127 Z"/>
+      </g>
+
+      <!-- Fore Hills & Graveyard Ground -->
+      <path d="M0,210 Q320,165 740,200 Q1100,230 1440,195 L1440,280 L0,280 Z" fill="url(#hillGrad)"/>
+
+      <!-- Tombstones & Crosses -->
+      <!-- Cross 1 -->
+      <path d="M220,185 H235 V200 H248 V212 H235 V255 H220 V212 H207 V200 H220 Z" fill="#08040d"/>
+      <!-- Tombstone RIP -->
+      <path d="M380,245 L380,185 Q405,165 430,185 L430,245 Z" fill="#1b122c" stroke="#2c223b" stroke-width="1.5"/>
+      <text x="405" y="205" font-family="'Creepster', cursive" font-size="14" fill="#5c4e75" text-anchor="middle">R.I.P</text>
+      <!-- Slanted Tombstone -->
+      <path d="M680,250 L690,190 Q710,180 725,195 L718,252 Z" fill="#150e22" stroke="#251b33" stroke-width="1"/>
+      <!-- Cross 2 (Distant) -->
+      <path d="M860,180 H870 V190 H878 V198 H870 V225 H860 V198 H852 V190 H860 Z" fill="#0c0714"/>
+      <!-- Tombstone 3 -->
+      <path d="M1060,255 L1060,195 Q1080,180 1100,195 L1100,255 Z" fill="#1a1129" stroke="#2b203a" stroke-width="1"/>
+      <text x="1080" y="215" font-family="'Creepster', cursive" font-size="12" fill="#5c4e75" text-anchor="middle">1888</text>
+      <!-- Slanted Cross -->
+      <g transform="rotate(8 1220 220)">
+        <path d="M1215,185 H1225 V195 H1233 V203 H1225 V235 H1215 V203 H1207 V195 H1215 Z" fill="#09040e"/>
+      </g>
+    </svg>
+
+    <!-- 7. Carved Jack-o'-Lantern with Flickering Candle Light -->
+    <div class="jack-o-lantern" title="The Jack-o'-Lantern glows with witchlight">
+      <svg viewBox="0 0 140 120" width="130" height="110" class="pumpkin-svg">
+        <defs>
+          <!-- Pumpkin Outer Gradients -->
+          <radialGradient id="jackSkin" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ff8c2b"/>
+            <stop offset="70%" stop-color="#e65c00"/>
+            <stop offset="100%" stop-color="#803300"/>
+          </radialGradient>
+          <!-- Flickering Candle Light Core -->
+          <radialGradient id="candleFlicker" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="25%" stop-color="#ffea75"/>
+            <stop offset="60%" stop-color="#ff7a18"/>
+            <stop offset="100%" stop-color="#d35400"/>
+          </radialGradient>
+          <!-- Jack Glow Filter -->
+          <filter id="flameGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="3.5" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+        </defs>
+
+        <!-- Twisted Green Stem -->
+        <path d="M66,16 C68,4 78,8 74,28 C69,27 67,24 66,16 Z" fill="#2d6a4f"/>
+
+        <!-- Pumpkin Lobes -->
+        <g id="pumpkinRounds">
+          <ellipse cx="38" cy="68" rx="28" ry="42" fill="url(#jackSkin)"/>
+          <ellipse cx="102" cy="68" rx="28" ry="42" fill="url(#jackSkin)"/>
+          <ellipse cx="52" cy="70" rx="30" ry="45" fill="url(#jackSkin)"/>
+          <ellipse cx="88" cy="70" rx="30" ry="45" fill="url(#jackSkin)"/>
+          <ellipse cx="70" cy="72" rx="32" ry="46" fill="url(#jackSkin)"/>
+        </g>
+
+        <!-- Carved Features with Flickering Inner Fire -->
+        <g class="flickering-face" filter="url(#flameGlow)">
+          <!-- Left Eye -->
+          <polygon points="44,52 60,57 52,69" fill="url(#candleFlicker)"/>
+          <!-- Right Eye -->
+          <polygon points="96,52 80,57 88,69" fill="url(#candleFlicker)"/>
+          <!-- Nose Triangle -->
+          <polygon points="70,68 64,80 76,80" fill="url(#candleFlicker)"/>
+          <!-- Carved Jagged Smile -->
+          <path d="M38,88 Q48,96 56,88 Q62,100 70,88 Q78,100 84,88 Q92,96 102,88 Q96,110 70,110 Q44,110 38,88 Z" fill="url(#candleFlicker)"/>
+          <!-- Jagged Teeth Points -->
+          <polygon points="52,88 56,94 60,88" fill="#5a2200"/>
+          <polygon points="80,88 84,94 88,88" fill="#5a2200"/>
+          <polygon points="66,104 70,98 74,104" fill="#5a2200"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <!-- 8. Thin Fog Drifting along the Bottom -->
+  <div class="fog-wrap" aria-hidden="true">
+    <div class="fog-layer fog-1"></div>
+    <div class="fog-layer fog-2"></div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- MAIN USER INTERFACE LAYER                            -->
+  <!-- ==================================================== -->
+  <div class="site-container">
+    
+    <!-- Top Bar Controls -->
+    <header class="top-nav">
+      <!-- Ambient Sound Toggle -->
+      <button id="btnAudioToggle" class="nav-btn sound-btn" title="Toggle eerie ambient soundscape" aria-label="Toggle ambient sound">
+        <svg class="icon-speaker icon-muted" viewBox="0 0 24 24" width="22" height="22">
+          <path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor"/>
+          <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <svg class="icon-speaker icon-playing" viewBox="0 0 24 24" width="22" height="22" style="display:none;">
+          <path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+        <span class="btn-label" id="soundLabel">Sound: OFF</span>
+      </button>
+
+      <!-- Owner Authentication Portal (Small Skull/Key Button) -->
+      <div class="owner-portal-wrap">
+        <!-- Button visible to visitors / unauthenticated users -->
+        <button id="btnOpenOwnerLogin" class="nav-btn owner-key-btn" title="Owner Sanctum Entrance" aria-label="Open Owner Mode">
+          <svg viewBox="0 0 24 24" width="22" height="22" class="skull-icon">
+            <path d="M12 2C7.58 2 4 5.58 4 10C4 13.06 5.72 15.71 8.24 17L8 20H16L15.76 17C18.28 15.71 20 13.06 20 10C20 5.58 16.42 2 12 2Z" fill="currentColor"/>
+            <!-- Skull Eye Sockets -->
+            <ellipse cx="9" cy="10" rx="1.8" ry="2.2" fill="#120a1f"/>
+            <ellipse cx="15" cy="10" rx="1.8" ry="2.2" fill="#120a1f"/>
+            <!-- Nose Hole -->
+            <polygon points="12,12 11,14 13,14" fill="#120a1f"/>
+            <!-- Teeth Lines -->
+            <line x1="10" y1="18" x2="10" y2="20" stroke="#120a1f" stroke-width="1"/>
+            <line x1="12" y1="18" x2="12" y2="20" stroke="#120a1f" stroke-width="1"/>
+            <line x1="14" y1="18" x2="14" y2="20" stroke="#120a1f" stroke-width="1"/>
+          </svg>
+          <span class="btn-label">Owner Portal</span>
+        </button>
+
+        <!-- Status badge & logout button (ONLY visible when authenticated) -->
+        <div id="ownerActiveBar" class="owner-active-bar" style="display: none;">
+          <span class="owner-badge">
+            <span class="flame-dot"></span>
+            Crypt Keeper (Owner Mode)
+          </span>
+          <button id="btnLogout" class="nav-btn logout-btn" title="Exit Owner Mode and lock the crypt">
+            Logout
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Header & Spine-Chilling Title -->
+    <div class="board-header">
+      <h1 class="halloween-title">Halloween Message Board</h1>
+      <p class="halloween-subtitle">กระดานข้อความแห่งราตรีกาลวันปล่อยผี</p>
+      <div class="title-divider">
+        <span class="bat-icon">🦇</span>
+        <span class="divider-line"></span>
+        <span class="pumpkin-icon">🎃</span>
+        <span class="divider-line"></span>
+        <span class="bat-icon">🦇</span>
+      </div>
+      <p class="board-description">
+        Inscribed exclusively by the realm owner. Read by all wandering spirits &amp; mortals under the crimson moon.
+      </p>
+    </div>
+
+    <!-- ==================================================== -->
+    <!-- OWNER-ONLY COMPOSER ALTAR (Strictly hidden for visitors) -->
+    <!-- ==================================================== -->
+    <section id="ownerComposerAltar" class="composer-altar" style="display: none;" aria-label="Owner Message Composer">
+      <div class="altar-header">
+        <div class="altar-title">
+          <span class="cauldron-icon">🔮</span>
+          <span>Carve New Inscription (Owner Only)</span>
+        </div>
+        <span class="security-chip">Enforced by Server Sanctum</span>
+      </div>
+
+      <form id="composeForm" class="compose-form">
+        <div class="textarea-wrap">
+          <textarea
+            id="messageInput"
+            name="content"
+            rows="4"
+            placeholder="Carve your message into stone... Supports multi-line tales, emoji 🎃👻, and Thai script ภาษาไทย"
+            maxlength="5000"
+            required
+          ></textarea>
+          <div class="char-count">
+            <span id="charCounter">0</span> / 5,000
+          </div>
+        </div>
+
+        <div class="compose-actions">
+          <button type="submit" id="btnPublish" class="altar-btn publish-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+            </svg>
+            Publish Inscription
+          </button>
+        </div>
+        <div id="composeNotice" class="action-notice" role="alert" style="display: none;"></div>
+      </form>
+    </section>
+
+    <!-- ==================================================== -->
+    <!-- MESSAGE CARDS FEED (Newest First)                    -->
+    <!-- ==================================================== -->
+    <main class="board-main">
+      <div class="feed-header">
+        <h2 class="feed-title">
+          <span>📜 Whispers from the Grave</span>
+          <span id="messageCountBadge" class="count-badge">0</span>
+        </h2>
+        <button id="btnRefresh" class="nav-btn refresh-btn" title="Refresh inscriptions">
+          ↻ Refresh
+        </button>
+      </div>
+
+      <!-- Loading Spinner Indicator -->
+      <div id="feedLoader" class="feed-loader">
+        <div class="cauldron-bubble"></div>
+        <p>Summoning inscriptions from the crypt...</p>
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyFeedState" class="empty-state" style="display: none;">
+        <div class="empty-ghost-art">👻</div>
+        <p class="empty-title">The Crypt is Silent...</p>
+        <p class="empty-text">No whispers have been carved yet. Return when the moon is high!</p>
+      </div>
+
+      <!-- Dynamic Messages Grid Container -->
+      <div id="messagesContainer" class="messages-grid" role="feed" aria-busy="false">
+        <!-- Rendered dynamically by script.js with XSS protection -->
+      </div>
+    </main>
+
+    <!-- Site Footer -->
+    <footer class="board-footer">
+      <p>Haunted Halloween Message Board &bull; Designed with Pure CSS &amp; SVG &bull; All Rights to the Spirits</p>
+      <p class="thai-quote">สุขสันต์วันฮาโลวีน ขอให้ค่ำคืนนี้เต็มไปด้วยความลึกลับและเวทมนตร์ 🕯️</p>
+    </footer>
+
+  </div> <!-- /.site-container -->
+
+
+  <!-- ==================================================== -->
+  <!-- MODALS                                               -->
+  <!-- ==================================================== -->
+
+  <!-- 1. Owner Login Modal -->
+  <div id="loginModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="loginTitle" style="display: none;">
+    <div class="modal-card tombstone-modal">
+      <div class="modal-top">
+        <div class="modal-skull">
+          <svg viewBox="0 0 24 24" width="36" height="36" fill="#ff7a18">
+            <path d="M12 2C7.58 2 4 5.58 4 10C4 13.06 5.72 15.71 8.24 17L8 20H16L15.76 17C18.28 15.71 20 13.06 20 10C20 5.58 16.42 2 12 2Z"/>
+            <ellipse cx="9" cy="10" rx="1.8" ry="2.2" fill="#120a1f"/>
+            <ellipse cx="15" cy="10" rx="1.8" ry="2.2" fill="#120a1f"/>
+            <polygon points="12,12 11,14 13,14" fill="#120a1f"/>
+            <line x1="10" y1="18" x2="10" y2="20" stroke="#120a1f" stroke-width="1"/>
+            <line x1="12" y1="18" x2="12" y2="20" stroke="#120a1f" stroke-width="1"/>
+            <line x1="14" y1="18" x2="14" y2="20" stroke="#120a1f" stroke-width="1"/>
+          </svg>
+        </div>
+        <h3 id="loginTitle" class="modal-title">Enter Owner Sanctum</h3>
+        <p class="modal-sub">Whisper the secret passphrase set in <code>ADMIN_PASSWORD</code></p>
+      </div>
+
+      <form id="loginForm" class="modal-form">
+        <div class="input-field-wrap">
+          <label for="adminPasswordInput" class="field-label">Secret Incantation (Password):</label>
+          <input
+            type="password"
+            id="adminPasswordInput"
+            name="password"
+            placeholder="••••••••••••"
+            autocomplete="current-password"
+            required
+          />
+        </div>
+
+        <div id="loginAlert" class="modal-alert" role="alert" style="display: none;"></div>
+
+        <div class="modal-actions">
+          <button type="button" id="btnCancelLogin" class="altar-btn cancel-btn">Withdraw</button>
+          <button type="submit" id="btnSubmitLogin" class="altar-btn unlock-btn">
+            Unlock Sanctum
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. Edit Message Modal -->
+  <div id="editModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="editTitle" style="display: none;">
+    <div class="modal-card tombstone-modal">
+      <div class="modal-top">
+        <h3 id="editTitle" class="modal-title">Alter Inscription</h3>
+        <p class="modal-sub">Modify the ancient words on this tombstone</p>
+      </div>
+
+      <form id="editForm" class="modal-form">
+        <input type="hidden" id="editMessageId" value="">
+        <div class="textarea-wrap">
+          <textarea
+            id="editMessageInput"
+            rows="5"
+            placeholder="Update this inscription..."
+            maxlength="5000"
+            required
+          ></textarea>
+          <div class="char-count">
+            <span id="editCharCounter">0</span> / 5,000
+          </div>
+        </div>
+
+        <div id="editAlert" class="modal-alert" role="alert" style="display: none;"></div>
+
+        <div class="modal-actions">
+          <button type="button" id="btnCancelEdit" class="altar-btn cancel-btn">Cancel</button>
+          <button type="submit" id="btnSubmitEdit" class="altar-btn save-btn">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Delete Confirmation Modal -->
+  <div id="deleteModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="deleteTitle" style="display: none;">
+    <div class="modal-card tombstone-modal danger-modal">
+      <div class="modal-top">
+        <div class="danger-skull">⚠️ ⚰️</div>
+        <h3 id="deleteTitle" class="modal-title">Banish Inscription?</h3>
+        <p class="modal-sub">
+          Are you sure you wish to banish this inscription forever into the abyss?
+          Once destroyed, the spirits cannot restore it.
+        </p>
+      </div>
+
+      <div class="delete-preview-box">
+        <p id="deletePreviewText" class="delete-preview-content"></p>
+      </div>
+
+      <input type="hidden" id="deleteTargetId" value="">
+
+      <div class="modal-actions">
+        <button type="button" id="btnCancelDelete" class="altar-btn cancel-btn">Keep Inscription</button>
+        <button type="button" id="btnConfirmDelete" class="altar-btn banish-btn">
+          Banish Forever
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio Synthesizer Script -->
+  <script src="js/audio.js"></script>
+  <!-- Application Controller Script -->
+  <script src="js/script.js"></script>
+</body>
+</html>

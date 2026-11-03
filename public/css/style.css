@@ -1,0 +1,1378 @@
+/* ==========================================================================
+   HALLOWEEN MESSAGE BOARD - STYLESHEET
+   Palette: Near-Black Purple (#120a1f), Pumpkin Orange (#ff7a18),
+            Toxic Green (#7CFC00), Smoky Gray (#3a3247)
+   Fonts: Creepster / Nosifer (Headings), Kanit / Mali (Thai & Message Body)
+   ========================================================================== */
+
+:root {
+  /* Core Color Palette */
+  --bg-deep: #0a0512;
+  --bg-purple: #120a1f;
+  --bg-card: #1c122e;
+  --bg-card-hover: #24183b;
+  --surface-alt: #160c25;
+  
+  --pumpkin-orange: #ff7a18;
+  --pumpkin-glow: #ff9e42;
+  --pumpkin-dark: #b84b00;
+
+  --toxic-green: #7CFC00;
+  --toxic-glow: #9eff42;
+  --toxic-dark: #4b9e00;
+
+  --smoke-gray: #3a3247;
+  --smoke-light: #5a506b;
+  --smoke-border: #443757;
+
+  --text-primary: #f5f0fb;
+  --text-muted: #b9adc7;
+  --text-dark: #120a1f;
+
+  /* Typography */
+  --font-spooky: 'Creepster', 'Nosifer', cursive;
+  --font-body: 'Kanit', sans-serif;
+  --font-whimsical: 'Mali', cursive;
+
+  /* Spacing & Radii */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-tomb: 16px 16px 8px 8px;
+
+  /* Transitions */
+  --trans-fast: 0.18s ease;
+  --trans-smooth: 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Base Reset & Box Sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+}
+
+body {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  background: radial-gradient(circle at 50% 20%, #1d1033 0%, var(--bg-purple) 55%, var(--bg-deep) 100%);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   SCENE PROPS - SVG & PURE CSS DECORATIONS
+   ========================================================================== */
+
+/* 1. Sky Stars & Twinkle */
+.sky-stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60vh;
+  pointer-events: none;
+  z-index: 1;
+  background-image: 
+    radial-gradient(1.5px 1.5px at 15% 15%, #ffffff 100%, transparent),
+    radial-gradient(1px 1px at 35% 25%, #ffffff 100%, transparent),
+    radial-gradient(1.5px 1.5px at 65% 12%, #ffeaa7 100%, transparent),
+    radial-gradient(2px 2px at 80% 22%, #ffffff 100%, transparent),
+    radial-gradient(1px 1px at 45% 45%, #ffffff 100%, transparent),
+    radial-gradient(1.5px 1.5px at 90% 40%, #ffdfba 100%, transparent),
+    radial-gradient(1px 1px at 10% 48%, #ffffff 100%, transparent),
+    radial-gradient(2px 2px at 25% 60%, #ffeaa7 100%, transparent),
+    radial-gradient(1px 1px at 75% 55%, #ffffff 100%, transparent);
+  animation: starTwinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes starTwinkle {
+  0% { opacity: 0.55; }
+  50% { opacity: 0.85; }
+  100% { opacity: 0.65; }
+}
+
+/* Fireflies Container */
+.fireflies-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.firefly {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--toxic-green);
+  box-shadow: 0 0 10px var(--toxic-green), 0 0 20px var(--toxic-glow);
+  opacity: 0;
+  animation: fireflyFloat 8s infinite ease-in-out;
+}
+
+@keyframes fireflyFloat {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.6);
+  }
+  20% {
+    opacity: 0.9;
+    transform: translate(25px, -30px) scale(1.1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translate(-20px, -70px) scale(0.9);
+  }
+  80% {
+    opacity: 1;
+    transform: translate(30px, -110px) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(10px, -150px) scale(0.5);
+  }
+}
+
+/* 2. Full Moon and Drifting Clouds */
+.moon-cloud-stage {
+  position: fixed;
+  top: 35px;
+  right: calc(50% - 460px);
+  width: 220px;
+  height: 220px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@media (max-width: 1100px) {
+  .moon-cloud-stage {
+    right: 20px;
+    top: 20px;
+    transform: scale(0.75);
+  }
+}
+
+.full-moon {
+  position: absolute;
+  top: 25px;
+  left: 30px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  box-shadow: 0 0 50px rgba(254, 243, 199, 0.4), 0 0 100px rgba(255, 122, 24, 0.2);
+  animation: moonPulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes moonPulse {
+  0% {
+    box-shadow: 0 0 45px rgba(254, 243, 199, 0.35), 0 0 80px rgba(255, 122, 24, 0.15);
+  }
+  100% {
+    box-shadow: 0 0 70px rgba(254, 243, 199, 0.55), 0 0 120px rgba(255, 122, 24, 0.3);
+  }
+}
+
+/* Clouds drifting in front of/behind moon */
+.cloud {
+  position: absolute;
+  background: radial-gradient(ellipse at center, rgba(160, 140, 190, 0.28) 0%, rgba(20, 10, 35, 0.05) 75%, transparent 100%);
+  border-radius: 50px;
+  filter: blur(8px);
+}
+
+.cloud-1 {
+  width: 200px;
+  height: 45px;
+  top: 75px;
+  left: -40px;
+  animation: driftCloud 26s linear infinite;
+}
+
+.cloud-2 {
+  width: 160px;
+  height: 38px;
+  top: 115px;
+  left: 20px;
+  animation: driftCloud 34s linear infinite reverse;
+}
+
+.cloud-3 {
+  width: 240px;
+  height: 50px;
+  top: 40px;
+  left: -80px;
+  animation: driftCloud 42s linear infinite;
+}
+
+@keyframes driftCloud {
+  0% { transform: translateX(-80px); }
+  50% { transform: translateX(80px); }
+  100% { transform: translateX(-80px); }
+}
+
+/* 3. Cobwebs & Dangling Spiders */
+.cobweb {
+  position: fixed;
+  top: 0;
+  width: 180px;
+  height: 180px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.cobweb.top-left {
+  left: 0;
+}
+
+.cobweb.top-right {
+  right: 0;
+}
+
+.web-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.spider-thread {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  background: rgba(180, 170, 200, 0.35);
+  display: flex;
+  justify-content: center;
+  transform-origin: top center;
+  animation: spiderSway 4.5s ease-in-out infinite;
+}
+
+.thread-left {
+  left: 95px;
+  height: 140px;
+  animation-delay: -1s;
+}
+
+.thread-right {
+  right: 90px;
+  height: 115px;
+  animation-delay: -2.3s;
+}
+
+.spider {
+  position: absolute;
+  bottom: -15px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.spider:hover {
+  transform: scale(1.2);
+}
+
+@keyframes spiderSway {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(6deg); }
+}
+
+/* 4. Flying Bats at Intervals */
+.bat-flight-path {
+  position: fixed;
+  pointer-events: none;
+  z-index: 5;
+  top: 120px;
+  left: -100px;
+}
+
+.bat-1 {
+  animation: flyBatAcross 18s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: 2s;
+}
+
+.bat-2 {
+  top: 260px;
+  animation: flyBatAcross2 24s cubic-bezier(0.35, 0, 0.25, 1) infinite;
+  animation-delay: 11s;
+}
+
+@keyframes flyBatAcross {
+  0% {
+    transform: translate(-100px, 0) scale(0.6) rotate(15deg);
+    opacity: 0;
+  }
+  5% { opacity: 0.9; }
+  35% {
+    transform: translate(40vw, -80px) scale(0.9) rotate(-10deg);
+  }
+  65% {
+    transform: translate(75vw, 60px) scale(0.75) rotate(18deg);
+  }
+  95% { opacity: 0.8; }
+  100% {
+    transform: translate(110vw, -60px) scale(0.5) rotate(-5deg);
+    opacity: 0;
+  }
+}
+
+@keyframes flyBatAcross2 {
+  0% {
+    transform: translate(110vw, 40px) scale(0.5) scaleX(-1) rotate(-10deg);
+    opacity: 0;
+  }
+  5% { opacity: 0.85; }
+  45% {
+    transform: translate(60vw, -90px) scale(0.8) scaleX(-1) rotate(15deg);
+  }
+  75% {
+    transform: translate(25vw, 50px) scale(0.65) scaleX(-1) rotate(-12deg);
+  }
+  95% { opacity: 0.8; }
+  100% {
+    transform: translate(-100px, -40px) scale(0.4) scaleX(-1) rotate(8deg);
+    opacity: 0;
+  }
+}
+
+.bat-wing {
+  transform-origin: 32px 18px;
+}
+
+.wing-left {
+  animation: batWingFlap 0.28s ease-in-out infinite alternate;
+}
+
+.wing-right {
+  animation: batWingFlap 0.28s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes batWingFlap {
+  0% { transform: scaleY(1) rotate(0deg); }
+  100% { transform: scaleY(-0.6) rotate(-22deg); }
+}
+
+/* 5. Floating Ghosts (Translucent) */
+.floating-ghost {
+  position: fixed;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.ghost-left {
+  top: 300px;
+  left: 5%;
+  animation: ghostFloatLeft 7s ease-in-out infinite alternate;
+}
+
+.ghost-right {
+  top: 420px;
+  right: 6%;
+  animation: ghostFloatRight 8.5s ease-in-out infinite alternate;
+}
+
+@keyframes ghostFloatLeft {
+  0% {
+    transform: translateY(0) rotate(-3deg);
+    opacity: 0.55;
+    filter: drop-shadow(0 0 10px rgba(124, 252, 0, 0.25));
+  }
+  50% {
+    transform: translateY(-28px) rotate(4deg);
+    opacity: 0.8;
+    filter: drop-shadow(0 0 20px rgba(124, 252, 0, 0.45));
+  }
+  100% {
+    transform: translateY(8px) rotate(-2deg);
+    opacity: 0.6;
+    filter: drop-shadow(0 0 12px rgba(124, 252, 0, 0.3));
+  }
+}
+
+@keyframes ghostFloatRight {
+  0% {
+    transform: translateY(0) scaleX(-1) rotate(2deg);
+    opacity: 0.5;
+    filter: drop-shadow(0 0 12px rgba(255, 122, 24, 0.2));
+  }
+  50% {
+    transform: translateY(-35px) scaleX(-1) rotate(-4deg);
+    opacity: 0.75;
+    filter: drop-shadow(0 0 22px rgba(255, 122, 24, 0.35));
+  }
+  100% {
+    transform: translateY(6px) scaleX(-1) rotate(1deg);
+    opacity: 0.55;
+    filter: drop-shadow(0 0 14px rgba(255, 122, 24, 0.25));
+  }
+}
+
+/* 6. Graveyard, Bare Trees & Jack-o'-Lantern */
+.graveyard-landscape {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 240px;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.landscape-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Carved Jack-o'-Lantern with Flickering Light */
+.jack-o-lantern {
+  position: absolute;
+  bottom: 12px;
+  right: 90px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 0 18px rgba(255, 122, 24, 0.45));
+}
+
+.jack-o-lantern:hover {
+  transform: scale(1.1) rotate(3deg);
+}
+
+.flickering-face {
+  animation: candleFlicker 3s ease-in-out infinite;
+}
+
+@keyframes candleFlicker {
+  0%, 100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 12px #ff9e42) drop-shadow(0 0 20px #ff7a18);
+  }
+  20% {
+    opacity: 0.8;
+    filter: drop-shadow(0 0 7px #e65c00) drop-shadow(0 0 12px #d35400);
+  }
+  40% {
+    opacity: 0.96;
+    filter: drop-shadow(0 0 16px #ffea75) drop-shadow(0 0 24px #ff7a18);
+  }
+  60% {
+    opacity: 0.75;
+    filter: drop-shadow(0 0 5px #e65c00);
+  }
+  80% {
+    opacity: 0.92;
+    filter: drop-shadow(0 0 14px #ff9e42) drop-shadow(0 0 20px #ff7a18);
+  }
+}
+
+/* 7. Drifting Fog along Bottom */
+.fog-wrap {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 7;
+}
+
+.fog-layer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(28, 16, 46, 0.75) 0%, rgba(58, 42, 85, 0.3) 50%, transparent 100%);
+  filter: blur(12px);
+}
+
+.fog-1 {
+  animation: fogDrift 28s linear infinite;
+  opacity: 0.65;
+}
+
+.fog-2 {
+  animation: fogDrift 42s linear infinite reverse;
+  opacity: 0.45;
+  bottom: -20px;
+}
+
+@keyframes fogDrift {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-25%); }
+  100% { transform: translateX(0); }
+}
+
+/* ==========================================================================
+   MAIN SITE LAYOUT & USER INTERFACE
+   ========================================================================== */
+
+.site-container {
+  position: relative;
+  z-index: 12;
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 24px 20px 180px; /* bottom padding for graveyard footer */
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Navigation & Controls */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 18px;
+  background: rgba(18, 10, 31, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--smoke-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface-alt);
+  color: var(--text-primary);
+  border: 1px solid var(--smoke-border);
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--trans-fast);
+  user-select: none;
+}
+
+.nav-btn:hover {
+  background: #23153b;
+  border-color: var(--pumpkin-orange);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(255, 122, 24, 0.3);
+}
+
+.sound-btn.playing {
+  border-color: var(--toxic-green);
+  color: var(--toxic-green);
+  box-shadow: 0 0 12px rgba(124, 252, 0, 0.3);
+}
+
+/* Owner Portal Key/Skull Button */
+.owner-key-btn {
+  border-color: #55446f;
+  background: linear-gradient(135deg, #24143d 0%, #170d28 100%);
+}
+
+.owner-key-btn:hover {
+  border-color: var(--pumpkin-orange);
+  color: var(--pumpkin-orange);
+  box-shadow: 0 0 16px rgba(255, 122, 24, 0.4);
+}
+
+.skull-icon {
+  fill: var(--pumpkin-orange);
+  transition: transform 0.25s ease;
+}
+
+.owner-key-btn:hover .skull-icon {
+  transform: rotate(-10deg) scale(1.15);
+}
+
+/* Active Owner Status Bar */
+.owner-active-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.owner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(124, 252, 0, 0.12);
+  border: 1px solid var(--toxic-green);
+  border-radius: var(--radius-md);
+  color: var(--toxic-green);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.flame-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--toxic-green);
+  box-shadow: 0 0 8px var(--toxic-green);
+  animation: pulseDot 1.6s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(0.9); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 14px var(--toxic-green); }
+}
+
+.logout-btn {
+  background: rgba(220, 38, 38, 0.15);
+  border-color: #8b1e1e;
+  color: #ff9999;
+}
+
+.logout-btn:hover {
+  background: rgba(220, 38, 38, 0.35);
+  border-color: #ef4444;
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+}
+
+/* Header & Spooky Title */
+.board-header {
+  text-align: center;
+  padding: 18px 0 6px;
+}
+
+.halloween-title {
+  font-family: var(--font-spooky);
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  font-weight: 400;
+  letter-spacing: 3px;
+  color: var(--pumpkin-orange);
+  text-shadow: 
+    0 0 12px rgba(255, 122, 24, 0.6),
+    0 0 24px rgba(255, 122, 24, 0.3),
+    0 4px 6px #000000;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+
+.halloween-subtitle {
+  font-family: var(--font-whimsical);
+  font-size: clamp(1.1rem, 2.8vw, 1.5rem);
+  color: var(--toxic-green);
+  text-shadow: 0 0 10px rgba(124, 252, 0, 0.35);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.title-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 12px 0 16px;
+  opacity: 0.85;
+}
+
+.divider-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--smoke-light), transparent);
+}
+
+.bat-icon, .pumpkin-icon {
+  font-size: 1.25rem;
+}
+
+.board-description {
+  max-width: 620px;
+  margin: 0 auto;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   OWNER-ONLY COMPOSER ALTAR
+   ========================================================================== */
+
+.composer-altar {
+  background: linear-gradient(180deg, #211438 0%, #160d26 100%);
+  border: 2px solid var(--smoke-border);
+  border-top: 3px solid var(--pumpkin-orange);
+  border-radius: var(--radius-tomb);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 122, 24, 0.15);
+  padding: 24px;
+  transition: all var(--trans-smooth);
+}
+
+.composer-altar:hover {
+  box-shadow: 0 8px 35px rgba(0, 0, 0, 0.7), 0 0 25px rgba(255, 122, 24, 0.25);
+  border-color: #5d4875;
+  border-top-color: var(--pumpkin-glow);
+}
+
+.altar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.altar-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-spooky);
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  color: var(--pumpkin-orange);
+}
+
+.security-chip {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--toxic-green);
+  background: rgba(124, 252, 0, 0.1);
+  border: 1px solid rgba(124, 252, 0, 0.3);
+  padding: 3px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.textarea-wrap {
+  position: relative;
+  width: 100%;
+}
+
+textarea {
+  width: 100%;
+  background: #11091d;
+  color: var(--text-primary);
+  border: 1px solid var(--smoke-border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  resize: vertical;
+  min-height: 110px;
+  outline: none;
+  transition: border-color var(--trans-fast), box-shadow var(--trans-fast);
+}
+
+textarea:focus {
+  border-color: var(--pumpkin-orange);
+  box-shadow: 0 0 12px rgba(255, 122, 24, 0.35);
+}
+
+textarea::placeholder {
+  color: #7a6e8e;
+}
+
+.char-count {
+  position: absolute;
+  bottom: 12px;
+  right: 14px;
+  font-size: 0.75rem;
+  color: #8c7e9f;
+  pointer-events: none;
+}
+
+.compose-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.altar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 22px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all var(--trans-fast);
+  user-select: none;
+}
+
+.publish-btn {
+  background: linear-gradient(135deg, var(--pumpkin-orange) 0%, #d85700 100%);
+  color: #120a1f;
+  box-shadow: 0 4px 14px rgba(255, 122, 24, 0.35);
+}
+
+.publish-btn:hover {
+  background: linear-gradient(135deg, var(--pumpkin-glow) 0%, var(--pumpkin-orange) 100%);
+  box-shadow: 0 4px 20px rgba(255, 122, 24, 0.6);
+  transform: translateY(-2px);
+}
+
+.action-notice {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-notice.success {
+  background: rgba(124, 252, 0, 0.15);
+  border: 1px solid var(--toxic-green);
+  color: var(--toxic-green);
+}
+
+.action-notice.error {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid #ef4444;
+  color: #fca5a5;
+}
+
+/* ==========================================================================
+   FEED & MESSAGE CARDS
+   ========================================================================== */
+
+.board-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.feed-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--smoke-border);
+}
+
+.feed-title {
+  font-family: var(--font-spooky);
+  font-size: 1.8rem;
+  letter-spacing: 1.5px;
+  color: var(--toxic-green);
+  text-shadow: 0 0 10px rgba(124, 252, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.count-badge {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: rgba(124, 252, 0, 0.15);
+  border: 1px solid var(--toxic-green);
+  color: var(--toxic-green);
+  padding: 2px 10px;
+  border-radius: 12px;
+}
+
+.refresh-btn {
+  font-size: 0.85rem;
+  padding: 6px 14px;
+}
+
+/* Feed Loader */
+.feed-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 50px 0;
+  color: var(--text-muted);
+}
+
+.cauldron-bubble {
+  width: 44px;
+  height: 44px;
+  border: 3px solid rgba(124, 252, 0, 0.2);
+  border-top-color: var(--toxic-green);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  box-shadow: 0 0 15px rgba(124, 252, 0, 0.3);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: rgba(22, 13, 38, 0.5);
+  border: 1px dashed var(--smoke-border);
+  border-radius: var(--radius-lg);
+}
+
+.empty-ghost-art {
+  font-size: 3.5rem;
+  margin-bottom: 12px;
+  animation: floatEmpty 3s infinite ease-in-out;
+}
+
+@keyframes floatEmpty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.empty-title {
+  font-family: var(--font-spooky);
+  font-size: 1.6rem;
+  color: var(--pumpkin-orange);
+  margin-bottom: 6px;
+}
+
+.empty-text {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* Messages Grid */
+.messages-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 
+ * Message Card: Styled like an aged parchment / carved tombstone slab
+ * with an eerie glowing border and orange hover glow effect
+ */
+.message-card {
+  position: relative;
+  background: linear-gradient(160deg, #1d132e 0%, #160c25 60%, #12091e 100%);
+  border: 1px solid #433357;
+  border-left: 4px solid var(--pumpkin-orange);
+  border-radius: var(--radius-tomb);
+  padding: 22px 24px;
+  box-shadow: 
+    0 6px 18px rgba(0, 0, 0, 0.45),
+    0 0 10px rgba(124, 252, 0, 0.05);
+  transition: transform var(--trans-smooth), box-shadow var(--trans-smooth), border-color var(--trans-smooth);
+  overflow: hidden;
+}
+
+/* Subtle carved parchment / tombstone texture pseudo-element */
+.message-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(circle at 10% 20%, rgba(255, 122, 24, 0.03) 0%, transparent 40%),
+                    radial-gradient(circle at 90% 80%, rgba(124, 252, 0, 0.02) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+/* Hover Effect: Ominous pumpkin orange glow */
+.message-card:hover {
+  transform: translateY(-4px);
+  border-color: #63477d;
+  border-left-color: var(--pumpkin-glow);
+  box-shadow: 
+    0 10px 28px rgba(0, 0, 0, 0.6),
+    0 0 25px rgba(255, 122, 24, 0.45),
+    inset 0 0 15px rgba(255, 122, 24, 0.08);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.crypt-seal {
+  font-size: 0.9rem;
+}
+
+.card-time {
+  font-size: 0.85rem;
+  color: #ab9fc1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-edited-tag {
+  font-size: 0.72rem;
+  color: var(--toxic-green);
+  background: rgba(124, 252, 0, 0.1);
+  border: 1px solid rgba(124, 252, 0, 0.25);
+  padding: 1px 7px;
+  border-radius: 10px;
+}
+
+/* Owner Controls on Card (Strictly omitted for visitors) */
+.card-owner-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-icon-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--smoke-border);
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all var(--trans-fast);
+}
+
+.action-icon-btn.edit-btn:hover {
+  background: rgba(255, 122, 24, 0.2);
+  border-color: var(--pumpkin-orange);
+  color: var(--pumpkin-glow);
+}
+
+.action-icon-btn.delete-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  color: #fca5a5;
+}
+
+/* Card Body Content - Safe & Readable Typography */
+.card-body {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #f0e8f8;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Thai script styling enhancement */
+.card-body:lang(th) {
+  font-family: 'Kanit', sans-serif;
+  line-height: 1.75;
+}
+
+/* ==========================================================================
+   MODALS (LOGIN, EDIT, BANISH)
+   ========================================================================== */
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(7, 3, 14, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  background: linear-gradient(180deg, #24143d 0%, #150b26 100%);
+  border: 2px solid var(--smoke-border);
+  border-top: 4px solid var(--pumpkin-orange);
+  border-radius: var(--radius-tomb);
+  padding: 30px;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.8), 0 0 35px rgba(255, 122, 24, 0.3);
+  animation: modalSlideUp 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes modalSlideUp {
+  from { transform: translateY(20px) scale(0.96); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.modal-card.danger-modal {
+  border-top-color: #ef4444;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.8), 0 0 35px rgba(239, 68, 68, 0.35);
+}
+
+.modal-top {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.modal-skull, .danger-skull {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.modal-title {
+  font-family: var(--font-spooky);
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  color: var(--pumpkin-orange);
+  margin-bottom: 6px;
+}
+
+.danger-modal .modal-title {
+  color: #ef4444;
+}
+
+.modal-sub {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.modal-sub code {
+  background: #10061e;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--toxic-green);
+  font-family: monospace;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input-field-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #d1c5e4;
+}
+
+input[type="password"] {
+  width: 100%;
+  background: #11091d;
+  color: #ffffff;
+  border: 1px solid var(--smoke-border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  outline: none;
+  transition: all var(--trans-fast);
+}
+
+input[type="password"]:focus {
+  border-color: var(--pumpkin-orange);
+  box-shadow: 0 0 12px rgba(255, 122, 24, 0.4);
+}
+
+.modal-alert {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid #ef4444;
+  color: #fca5a5;
+}
+
+.delete-preview-box {
+  background: #11091d;
+  border-left: 3px solid #ef4444;
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 20px;
+  max-height: 140px;
+  overflow-y: auto;
+}
+
+.delete-preview-content {
+  font-size: 0.95rem;
+  color: #ded3eb;
+  font-style: italic;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.cancel-btn {
+  background: transparent;
+  border: 1px solid var(--smoke-border);
+  color: var(--text-muted);
+}
+
+.cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.unlock-btn {
+  background: linear-gradient(135deg, var(--pumpkin-orange) 0%, #d85700 100%);
+  color: #120a1f;
+}
+
+.unlock-btn:hover {
+  background: linear-gradient(135deg, var(--pumpkin-glow) 0%, var(--pumpkin-orange) 100%);
+  box-shadow: 0 0 16px rgba(255, 122, 24, 0.5);
+}
+
+.save-btn {
+  background: linear-gradient(135deg, var(--toxic-green) 0%, #4b9e00 100%);
+  color: #0c0617;
+}
+
+.save-btn:hover {
+  background: linear-gradient(135deg, var(--toxic-glow) 0%, var(--toxic-green) 100%);
+  box-shadow: 0 0 16px rgba(124, 252, 0, 0.5);
+}
+
+.banish-btn {
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+  color: #ffffff;
+}
+
+.banish-btn:hover {
+  background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.5);
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.board-footer {
+  text-align: center;
+  padding: 30px 10px 10px;
+  color: #8c7e9f;
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.thai-quote {
+  font-family: var(--font-whimsical);
+  color: var(--toxic-green);
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (MOBILE & TABLET)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .site-container {
+    padding: 16px 14px 170px;
+    gap: 24px;
+  }
+
+  .top-nav {
+    padding: 10px 14px;
+  }
+
+  .btn-label {
+    display: none;
+  }
+
+  .halloween-title {
+    font-size: 2.2rem;
+  }
+
+  .halloween-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .composer-altar {
+    padding: 18px 16px;
+  }
+
+  .message-card {
+    padding: 18px 16px;
+  }
+
+  .jack-o-lantern {
+    right: 20px;
+    transform: scale(0.85);
+  }
+
+  .floating-ghost {
+    display: none; /* Keep screen clean on mobile screens */
+  }
+
+  .modal-card {
+    padding: 22px 18px;
+  }
+}
+
+/* ==========================================================================
+   ACCESSIBILITY: PREFERS-REDUCED-MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .sky-stars,
+  .cloud,
+  .spider-thread,
+  .bat-flight-path,
+  .floating-ghost,
+  .fog-layer,
+  .fireflies-container {
+    animation: none !important;
+  }
+
+  .bat-flight-path {
+    display: none;
+  }
+
+  .message-card:hover {
+    transform: none;
+  }
+}

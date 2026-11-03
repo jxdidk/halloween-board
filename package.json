@@ -1,0 +1,25 @@
+{
+  "name": "halloween-message-board",
+  "version": "1.0.0",
+  "description": "Spooky themed Halloween Message Board with strictly authenticated owner privileges and visitor read-only access.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node test-in-memory.js"
+  },
+  "keywords": [
+    "halloween",
+    "message-board",
+    "express",
+    "sqlite",
+    "themed-ui"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
